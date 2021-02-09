@@ -18,12 +18,11 @@ function crossOut(event) {
 function deleteListItem(event) {
   $(event.currentTarget).closest("li").addClass("delete");
 }
-
 function newItem(inputValue) {
   if (inputValue === '') {
     alert('You must write something!');
     return;
-  }
+}
 
   let li = $("<li></li>");
 
