@@ -8,7 +8,7 @@ event.preventDefault();
 
   newItem(inputValue);
 
-  newItem.val("");
+  input.val("");
 }
 
 function crossOut(event) {
