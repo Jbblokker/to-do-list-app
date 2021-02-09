@@ -1,36 +1,49 @@
-function newItem(){
+let list = $('#list');
+let input = $("#input");
 
-let li = $("<li></li>");
-let inputValue = $('#input').val();
-list.append(inputValue);
+function handleNewInput (event) {
+event.preventDefault();
 
-if (inputValue === '') {
-  alert('You must write something!');
-} else {
-  let list = $('#list');
-  $('#list').append(li);
+  const inputValue = input.val();
+
+  newItem(inputValue);
+
+  newItem.val("");
 }
 
-//this is to cross something off the list
-function crossOut() {
-  li.toggleClass("strike");
+function crossOut(event) {
+  $(event.currentTarget).closest("li").toggleClass("strike");
+}
+
+function deleteListItem(event) {
+  $(event.currentTarget).closest("li").addClass("delete");
+}
+
+function newItem(inputValue) {
+  if (inputValue === '') {
+    alert('You must write something!');
+    return;
   }
 
-  li.on("dbclick", function crossOut() {
-    li.toggleClass("strike");
-});
+  let li = $("<li></li>");
+
+  li.text(inputValue);
+  list.append(li);
+
+  li.on("dblclick", crossOut);
 
 //adding an X button
-let crossOutButton = $( '<crossOutButton></crossOutButton>');
-crossOutButton.append(document.createTextNode('X'));
-li.append(crossOutButton);
+  let crossOutButton = $('<crossOutButton></crossOutButton>');
+  crossOutButton.append(document.createTextNode('X'));
+  li.append(crossOutButton);
 
 //adding class delete
-crossOutButton.on("click", deleteListItem);
-  function deleteListItem(){
-    li.addClass("delete")
-}
+  crossOutButton.on("click", deleteListItem);
 
 //reordering the list
-$('list').sortable();
+  list.sortable();
 }
+
+$('form[name="toDoList"]').on("submit", handleNewInput);
+
+$('#button').on("click", handleNewInput);
